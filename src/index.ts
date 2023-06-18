@@ -3,20 +3,25 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import { join } from 'path'
-import usersRouter from './routes/users'
+import authRouter from './routes/auth'
 
 dotenv.config()
 
-const PORT = process.env.PORT || 8080
+enum Route {
+  Root = '/',
+  Auth = '/auth',
+}
+
+const PORT = process.env.PORT
+const corsOptions = { credentials: true, origin: process.env.URL }
 const app = express()
-const corsOptions = { credentials: true, origin: process.env.URL || '*' }
 
 app.use(express.static(join(__dirname, '../public')))
 app.use(cors(corsOptions))
 app.use(json())
 app.use(cookieParser())
-app.use('/api/users', usersRouter)
+app.use(Route.Auth, authRouter)
 
-app.get('/', (req, res) => res.render('index.html'))
+app.get(Route.Root, (req, res) => res.render('index.html'))
 
 app.listen(PORT, () => console.log('Server is listening'))

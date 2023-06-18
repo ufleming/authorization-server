@@ -1,11 +1,11 @@
 import { Pool, PoolConfig } from 'pg'
 
 export const localPoolConfig: PoolConfig = {
-  user: 'ufleming',
-  password: 'flem715955789',
+  user: 'postgres',
+  password: 'sandbox',
   host: 'localhost',
   port: 5432,
-  database: '',
+  database: 'repeatedstudy',
 }
 
 const poolConfig: PoolConfig = process.env.DATABASE_URL ? {
